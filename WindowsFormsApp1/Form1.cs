@@ -143,7 +143,7 @@ namespace WindowsFormsApp1
         private void Form1_Load(object sender, EventArgs e)
         {
             int j = 5000, i = 0;
-            double dt = 0.002, t = 0, p = 0;
+            double dt = 0.002, t = 0, p = 0, r = 0;
             for (i = 0; i < j; i++)
             {
                 utSL.Add(t, Math.Sin(t));
@@ -161,6 +161,36 @@ namespace WindowsFormsApp1
                 }
                 p = p + dt;
             }
+            double value = 0;
+            int marker = 0;
+            for (i = 0; i < j; i++)
+            {
+                if (marker == 0)
+                {
+                    if (value > -1.1 && value < 1)
+                    {
+                        value = value+dt;
+                    }
+                    else
+                    {
+                        marker = 1;
+                    }
+                }
+                else
+                {
+                    if(value>-1 && value < 1.1)
+                    {
+                        value = value - dt;
+                    }
+                    else
+                    {
+                        marker = 0;
+                    }
+                }
+                uttSL.Add(r, value);
+                r = r + dt;
+            }   
+               
+            }
         }
-    }
 }
