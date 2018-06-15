@@ -173,12 +173,11 @@
             this.checkedListBox1.Items.AddRange(new object[] {
             "sinusoidalnym",
             "trójkątnym",
-            "prostokątnym"});
+            "prostokatnym"});
             this.checkedListBox1.Location = new System.Drawing.Point(15, 233);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(135, 72);
             this.checkedListBox1.TabIndex = 22;
-            this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
             // 
             // label1
             // 

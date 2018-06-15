@@ -17,8 +17,11 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
-        
-        
+        SortedList utSL = new SortedList();
+        SortedList utpSL = new SortedList();
+        SortedList uttSL = new SortedList();
+        double ut;
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -81,7 +84,7 @@ namespace WindowsFormsApp1
         */
         private void sym_Click(object sender, EventArgs e)
         {
-            double dt, x1= 0 , x2= 0, x3= 0,x4 = 0, t= 0,y = 0, a1, a2, a3, a0,db1, db0;
+            double dt, x1 = 0, x2 = 0, x3 = 0, x4 = 0, t = 0, y = 0, a1, a2, a3, a0, db1, db0;
             int j, i;           
             j = 5000;
             dt = 0.002;
@@ -90,41 +93,74 @@ namespace WindowsFormsApp1
             a3 = Convert.ToDouble(txta3.Text);
             a0 = Convert.ToDouble(txta0.Text);
             db0 = Convert.ToDouble(b0.Text);
-            db1 = Convert.ToDouble(b1.Text);
+            db1 = Convert.ToDouble(b1.Text);         
             SortedList x1SL = new SortedList();            
             SortedList x2SL = new SortedList();
             SortedList x3SL = new SortedList();
             SortedList x4SL = new SortedList();
             SortedList ySL = new SortedList();
+            string[] s = { "sinusoidalnym", "trójkątnym", "prostokątnym" };
             foreach (var series in chart1.Series)
             {
                 series.Points.Clear();
             }
             for (i = 0; i<j; i++) {
+                foreach (Object item in checkedListBox1.CheckedItems)
+                    if (item.ToString() == "sinusoidalnym")
+                    {
+                        ut = Convert.ToDouble(utSL[t]);
+                    }
+                    else
+                    {
+                        if (item.ToString() == "trójkątnym")
+                            {
+                                ut = Convert.ToDouble(uttSL[t]);
+                            }
+                            else
+                            {
+                                if (item.ToString() == "prostokatnym")
+                                    {
+                                        ut = Convert.ToDouble(utpSL[t]);
+                                    }
+                            }
+                    }
                 x1 = x1 + x2 * dt;
                 x2 = x2 + x3 * dt;
                 x3 = x3 + x4 * dt;
-                x4 = x4 + (-a0 * x1 - a1 * x2 - a2 * x3 - a3 * x4 + Math.Sin(t)) * dt;
-                y = db1 * x1 + db0 * x2;
+                x4 = x4 + (-a0 * x1 - a1 * x2 - a2 * x3 - a3 * x4 + db1 * ut + db0 * ut) * dt;
+                y = x1;
                 x1SL.Add(t, x1);
                 x2SL.Add(t, x2);
                 x3SL.Add(t, x3);
                 x4SL.Add(t, x4);
                 ySL.Add(t, y);
                 chart1.Series["y"].Points.AddXY(t, ySL[t]);
-                chart1.Series["u(t)"].Points.AddXY(t, Math.Sin(t));
+                chart1.Series["u(t)"].Points.AddXY(t, ut);
                 t = t + dt;
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-        }
-
-        private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            
+            int j = 5000, i = 0;
+            double dt = 0.002, t = 0, p = 0;
+            for (i = 0; i < j; i++)
+            {
+                utSL.Add(t, Math.Sin(t));
+                t = t + dt;
+            }
+            for (i = 0; i < j; i++)
+            {
+                if (Math.Sin(p) > 0) {
+                    utpSL.Add(p, 1);
+                    
+                }
+                else
+                {
+                    utpSL.Add(p, -1);
+                }
+                p = p + dt;
+            }
         }
     }
 }
