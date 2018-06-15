@@ -17,9 +17,7 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
-        int[,] macierzA;
-        int[] macierzB;
-        int[] macierzC;
+        
         
 
         private void button1_Click(object sender, EventArgs e)
@@ -46,7 +44,7 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void b0_TextChanged(object sender, EventArgs e)
+       /* private void b0_TextChanged(object sender, EventArgs e)
         {
             n1.Text = b0.Text;
         }
@@ -80,7 +78,7 @@ namespace WindowsFormsApp1
         {
             d4.Text = txta0.Text;
         }
-        
+        */
         private void sym_Click(object sender, EventArgs e)
         {
             double dt, x1= 0 , x2= 0, x3= 0,x4 = 0, t= 0,y = 0, a1, a2, a3, a0,db1, db0;
@@ -98,6 +96,10 @@ namespace WindowsFormsApp1
             SortedList x3SL = new SortedList();
             SortedList x4SL = new SortedList();
             SortedList ySL = new SortedList();
+            foreach (var series in chart1.Series)
+            {
+                series.Points.Clear();
+            }
             for (i = 0; i<j; i++) {
                 x1 = x1 + x2 * dt;
                 x2 = x2 + x3 * dt;
@@ -110,15 +112,19 @@ namespace WindowsFormsApp1
                 x4SL.Add(t, x4);
                 ySL.Add(t, y);
                 chart1.Series["y"].Points.AddXY(t, ySL[t]);
+                chart1.Series["u(t)"].Points.AddXY(t, Math.Sin(t));
                 t = t + dt;
             }
-            
-            //MessageBox.Show()
-            
-            
+        }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
+        }
 
+        private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            
         }
     }
 }
